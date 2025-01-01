@@ -6,8 +6,10 @@ input `browser`, renames workspace `3` to `3:browser`.
 
 #### install
 
-depends on rofi for now. clone, run `cargo build --release`, and create a 
-symlink to somewhere in your path if you wish.
+clone the source code, or download and extract the tarball from the `releases`
+section, then run `cargo install --path .`
+
+depends on rofi for now. 
 
 #### config
 
