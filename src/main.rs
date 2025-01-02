@@ -27,6 +27,12 @@ impl Manager {
         let prompted = Command::new("rofi")
             .args(["-dmenu", "-p", "rename to: "])
             .output()?;
+
+        if prompted.status.code() == Some(1) {
+            // rofi cancelled.
+            return Ok(());
+        }
+
         let new_name = format!("{}:{}", 
             idx, 
             String::from_utf8_lossy(&prompted.stdout)
