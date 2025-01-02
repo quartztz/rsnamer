@@ -9,6 +9,10 @@ input `browser`, renames workspace `3` to `3:browser`.
 clone the source code, or download and extract the tarball from the `releases`
 section, then run `cargo install --path .`
 
+by default `cargo` installs in userspace. depending on how your path is setup, 
+you'll either need to symlink the binary into `/usr/bin` or directly install
+with the `--root /usr/bin` option.
+
 depends on rofi for now. 
 
 #### config
