@@ -5,6 +5,13 @@ struct Manager {
     connection: Connection,
 }
 
+macro_rules! println {
+    ($($rest:tt)*) => {
+        #[cfg(debug_assertions)]
+        std::println!($($rest)*)
+    }
+}
+
 impl Manager {
     fn new() -> Fallible<Self> {
         Ok(Self {
@@ -19,14 +26,18 @@ impl Manager {
             .find(|ws| ws.focused)
             .ok_or("no focused workspace")
             .unwrap();
-        let idx = current.name.split("::")
+        let idx = current.name.split(":")
             .next()
             .unwrap() // should be impossible to not have a number
             .trim();
 
+        println!("index: {}", idx);
+
         let prompted = Command::new("rofi")
-            .args(["-dmenu", "-p", "rename to: "])
+            .args(["-dmenu", "-p", "rename to"])
             .output()?;
+        
+        println!("prompted: {}", String::from_utf8_lossy(&prompted.stdout).trim()); 
 
         if prompted.status.code() == Some(1) {
             // rofi cancelled.
